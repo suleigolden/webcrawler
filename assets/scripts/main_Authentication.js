@@ -21,6 +21,37 @@ function checkEmptyval(value){
 	}
 }
 //Create new user account
+function checkEmail(){
+	var hr = new XMLHttpRequest();
+    var url = "controller/user_authenticationlog.php";
+    var eml = _("emailprolog").value;
+    var vars = "checkemail_login="+eml;
+    hr.open("POST", url, true);
+    hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    
+    hr.onreadystatechange = function() {
+      if(hr.readyState == 4 && hr.status == 200) {
+        var return_data = hr.responseText;
+        if(return_data =="true" || return_data.includes("true")){
+        	_("check_status").innerHTML = "<label style='color:#5cb85c;'>"+eml+" is OK!</label>";
+         }else{
+           _("emailprolog").value = "";
+           _("check_status").innerHTML = "<label style='color:#F00;'>"+eml+" is taken, please select another email address!</label>";;
+        }
+      
+      }
+    }
+
+	if(this.checkEmptyval(eml) =="true"){
+		      _("check_status").innerHTML = "<label style='color:#F00; background-color:#FFF; '>Email can Not be Empty.</label>";       
+		  }else if(!this.checkEmail(eml)){
+		      _("check_status").innerHTML = "<label style='color:#F00; background-color:#FFF; '>Type in correct email address.</label>";
+		  }else{
+	    hr.send(vars); 
+	    _("check_status").innerHTML = "<label style='color:#5cb85c;'>processing log in.....</label>";
+	}
+}
+//Create new user account
 function createAccount(){
     var hr = new XMLHttpRequest();
     var url = "controller/user_authenticationlog.php";
