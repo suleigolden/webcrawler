@@ -8,5 +8,5 @@
     <link href="assets/css/style.css" rel="stylesheet" />
     <link href="assets/css/main-style.css" rel="stylesheet" />
     <link href="assets/css/custom.css" rel="stylesheet" />
-
+    <script type="text/javascript" src="assets/scripts/main_Authentication.js"></script>
 </head>
