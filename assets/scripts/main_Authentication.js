@@ -44,9 +44,7 @@ function checkEmail(){
 
 	if(this.checkEmptyval(eml) =="true"){
 		      _("check_status").innerHTML = "<label style='color:#F00; background-color:#FFF; '>Email can Not be Empty.</label>";       
-		  }else if(!this.checkEmail(eml)){
-		      _("check_status").innerHTML = "<label style='color:#F00; background-color:#FFF; '>Type in correct email address.</label>";
-		  }else{
+	  }else{
 	    hr.send(vars); 
 	    _("check_status").innerHTML = "<label style='color:#5cb85c;'>processing log in.....</label>";
 	}

@@ -27,7 +27,7 @@ include_once("head.php");
                                     <input class="form-control" type="text" placeholder="Full Name" id="fname" autofocus required>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" type="Email" placeholder="Email" id="emailprolog" onblur="checkEmail()" autofocus required>
+                                    <input class="form-control" type="Email" placeholder="Email" id="emailprolog" onblur="checkEmail()" >
                                     <div id="check_status"></div>
                                 </div>
                                 <div class="form-group">
