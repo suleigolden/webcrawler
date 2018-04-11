@@ -1,0 +1,33 @@
+body{ width:100%; position: relative;
+   min-width: 320px;
+   min-height: 100%;
+   height: auto;
+   margin-top: 0px;
+   margin-right: auto;
+   margin-bottom: -67px;
+   margin-left: auto; 
+   background-color: #0c0c0c;
+   background: #000 url(../../images/body_image.jpg) top center no-repeat;
+   background-attachment: fixed;
+   margin: 0;
+   padding: 0;
+   color: #000;
+   position: relative;
+   font: 400 15px/1.266em "dax-medium",arial,sans-serif;
+  
+  }
+ .body_image{
+   background: #000 url(../../images/body_image.jpg) top center no-repeat;
+   background-attachment: fixed;
+}
+#body_image{
+   margin-left:10%;
+   background: #000 url(../../images/body_image.jpg) top center no-repeat;
+   background-attachment: fixed;
+}
+body{
+	background: #000 url(../../images/body_image.jpg) top center no-repeat;
+   background-attachment: fixed;
+}
+
+ 
