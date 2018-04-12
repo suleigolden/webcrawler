@@ -66,7 +66,7 @@ function createAccount(){
       if(hr.readyState == 4 && hr.status == 200) {
         var return_data = hr.responseText;
         if(return_data =="true" || return_data.includes("true")){
-           window.location = "?/=uerlog&goto=dashboard";
+           window.location = "?/=userlog&goto=dashboard";
          }else{
            _("reg_status").innerHTML = return_data;
         }
@@ -101,7 +101,7 @@ function login_user(){
       if(hr.readyState == 4 && hr.status == 200) {
         var return_data = hr.responseText;
         if(return_data =="true" || return_data.includes("true")){
-           window.location = "?/=uerlog&goto=dashboard";
+           window.location = "?/=userlog&goto=dashboard";
          }else{
            _("logIn_status").innerHTML = return_data;
         }
