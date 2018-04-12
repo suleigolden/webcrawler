@@ -9,6 +9,10 @@ if(isset($_GET['/']) && isset($_GET['goto'])){
 	$Newpage = $_GET['/'];
 	$pagelocation = $_GET['goto']; 
 	$set_Page->profile_UserDashboard($Newpage,$pagelocation);
+}else if(isset($_GET['goto'])){
+	$Newpage = '/';//$_GET['/'];
+	$pagelocation = $_GET['goto']; 
+	$set_Page->profile_UserDashboard($Newpage,$pagelocation);
 }else if(isset($_GET['/'])){
 	$Newpage = $_GET['/'];
 	$set_Page->set_New_pages($Newpage);
