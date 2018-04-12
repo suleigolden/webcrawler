@@ -2,8 +2,8 @@
 function _(el) {
   return document.getElementById(el);
 }
-//Check if the uer type correct email address
-function checkEmail(emailID) {
+//function to Check if the uer type correct email address
+function check_Emaildd(emailID) {
   if (!emailID.match(/\S+@\S+\.\S+/)) {
     return false;
   }
@@ -44,6 +44,8 @@ function checkEmail(){
 
 	if(this.checkEmptyval(eml) =="true"){
 		      _("check_status").innerHTML = "<label style='color:#F00; background-color:#FFF; '>Email can Not be Empty.</label>";       
+	  }else if(!this.check_Emaildd(eml)){
+	      _("check_status").innerHTML = "<label style='color:#F00; background-color:#FFF; '>Type in correct email address.</label>";
 	  }else{
 	    hr.send(vars); 
 	    _("check_status").innerHTML = "<label style='color:#5cb85c;'>processing log in.....</label>";
@@ -76,8 +78,8 @@ function createAccount(){
 	      _("reg_status").innerHTML = "<label style='color:#F00; background-color:#FFF; '>Full Name can Not be Empty.</label>";
 	  }else if(this.checkEmptyval(eml) =="true"){
 	      _("reg_status").innerHTML = "<label style='color:#F00; background-color:#FFF; '>Email can Not be Empty.</label>";       
-	  }else if(!this.checkEmail(eml)){
-	      _("reg_status").innerHTML = "<label style='color:#F00; background-color:#FFF; '>Type in correct email address.</label>";
+	  }else if(!this.check_Emaildd(eml)){
+	      _("check_status").innerHTML = "<label style='color:#F00; background-color:#FFF; '>Type in correct email address.</label>";
 	  }else if(this.checkEmptyval(pswd) =="true"){
 	      _("reg_status").innerHTML = "<label style='color:#F00; background-color:#FFF; '>Password can Not be Empty.</label>";
 	  }else{
@@ -108,7 +110,7 @@ function login_user(){
     }
 	if(this.checkEmptyval(eml) =="true"){
 		      _("logIn_status").innerHTML = "<label style='color:#F00; background-color:#FFF; '>Email can Not be Empty.</label>";       
-		  }else if(!this.checkEmail(eml)){
+		  }else if(!this.check_Emaildd(eml)){
 		      _("logIn_status").innerHTML = "<label style='color:#F00; background-color:#FFF; '>Type in correct email address.</label>";
 		  }else if(this.checkEmptyval(pswd) =="true"){
 		      _("logIn_status").innerHTML = "<label style='color:#F00; background-color:#FFF; '>Password can Not be Empty.</label>";
