@@ -119,3 +119,38 @@ function login_user(){
 	    _("logIn_status").innerHTML = "<label style='color:#5cb85c;'>processing log in.....</label>";
 	}
 }
+
+function SaveUrl(){
+var hr = new XMLHttpRequest();
+var url = "controller/user_authenticationlog.php";
+var links = document.getElementsByName("URLlink[]");
+var allurl = "";
+var i; var chk = "";
+for (i = 0; i < links.length; i++) {
+        if (links[i].value) {
+            allurl = allurl + links[i].value + "*^*";
+            chk = "yes";
+        }else{
+            chk = "no";
+        }
+    }
+  var vars = "Savenew_Url_log="+allurl;
+    hr.open("POST", url, true);
+    hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    
+    hr.onreadystatechange = function() {
+      if(hr.readyState == 4 && hr.status == 200) {
+        var return_data = hr.responseText;
+         _("saveMessage").innerHTML = return_data;
+      }
+    }
+
+    if(this.checkEmptyval(allurl) =="true" || chk== "no"){
+      _("saveMessage").innerHTML = "<label style='color:#F00; background-color:#FFF; '>Url can Not be Empty.</label>";
+    }else{
+       hr.send(vars); 
+      _("saveMessage").innerHTML = "<label style='color:#5cb85c;'>Saving Url.....</label>";
+    }
+    
+
+}

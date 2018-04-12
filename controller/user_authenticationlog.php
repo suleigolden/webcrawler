@@ -9,5 +9,10 @@ if(isset($_POST['checkemail_login'])){
 	$Request ->  registerUser($connect);
 }elseif (isset($_POST['email_login']) && isset($_POST['passwordone_login'])) {
 	$Request ->  loginUser($connect);
+}if(isset($_POST['Savenew_Url_log'])){
+	$Request ->  SaveUrl_new($connect,$_POST['Savenew_Url_log']);
 }
+
+
+
 ?>

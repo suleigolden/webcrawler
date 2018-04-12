@@ -15,7 +15,7 @@ include_once("navigation.php");
 
         <div class="row">
           <div class="col-lg-12">
-            <h1>Welcome to <small>Suleiman</small>  web Crawler</h1>
+            <h1>All <small>URL</small> display</h1>
             
           </div>
         </div>

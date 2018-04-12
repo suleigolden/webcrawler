@@ -17,8 +17,8 @@ $navigate_to = '?/&goto';
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav side-nav">
             <li class="active"><a href="<?php echo $navigate_to; ?>=dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li><a href="<?php echo $navigate_to; ?>=newcrawler"><i class="fa fa-edit"></i> Add new Crawler</a></li>
-            <li><a href="<?php echo $navigate_to; ?>=crawlers"><i class="fa fa-table"></i> View Crawler</a></li>
+            <li><a href="<?php echo $navigate_to; ?>=newcrawler"><i class="fa fa-edit"></i> Add new URL</a></li>
+            <li><a href="<?php echo $navigate_to; ?>=crawlers"><i class="fa fa-table"></i> View all URL </a></li>
             
           </ul>
 
