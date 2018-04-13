@@ -13,6 +13,8 @@ if(isset($_POST['checkemail_login'])){
 	$Request ->  SaveUrl_new($connect,$_POST['Savenew_Url_log']);
 }else if(isset($_POST['displayAllURldetails'])){
 	$Request ->  getallURL($connect,$_POST['displayAllURldetails']);
+}else if(isset($_POST['Deletethis_URldetails'])){
+	$Request ->  delete_URL($connect,$_POST['Deletethis_URldetails']);
 }
 
 

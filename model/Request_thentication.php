@@ -162,7 +162,7 @@ $querycheck= mysqli_query($connect,"SELECT * FROM urls_metrics WHERE URL_ID='$ge
                      <td id="titleStatus'.$getURL_ID.'">'.$getHTML_title.'</td>
                      <td id="ExternalStatus'.$getURL_ID.'">'.$getExternalLinks.'</td>
                      <td id="googleStatus'.$getURL_ID.'">'.$getgoogleAnalytics.'</td>
-                     <td><a onClick="CrawlURL(\''.$getURL_ID.'\',\''.$getURL.'\')" class="btn btn-success btn-xs"><i class="fa fa-search"></i> Crawl Url </a></td>
+                     <td><a onClick="CrawlURL(\''.$getURL_ID.'\',\''.$getURL.'\')" class="btn btn-success btn-xs" id="urldeltemessage'.$getURL_ID.'"><i class="fa fa-search"></i> Crawl Url </a></td>
                 </tr>';
 }
 
@@ -170,9 +170,13 @@ $querycheck= mysqli_query($connect,"SELECT * FROM urls_metrics WHERE URL_ID='$ge
 }
 //Function to delete URL
 function delete_URL($connect,$url){
-	mysqli_query($connect,"DELETE FROM url_links WHERE URL_ID='$url' ");
-	mysqli_query($connect,"DELETE FROM urls_metrics WHERE URL_ID='$url' ");
-	echo "Yap";
+	if(mysqli_query($connect,"DELETE FROM url_links WHERE URL_ID='$url' ")){
+			mysqli_query($connect,"DELETE FROM urls_metrics WHERE URL_ID='$url' ");
+			echo "true";
+	}else{
+			echo "false";
+	}
+	
 }
 
 

@@ -171,3 +171,25 @@ function get_llURL_links(user){
   //_("LoadingurltMessage").innerHTML = "<label style='color:#5cb85c;'>Loading all URL please waite.....</label>";
   
 }
+
+function deleteURL(link){
+var vars = "Deletethis_URldetails="+link;
+  var hr = new XMLHttpRequest();
+  var url = "controller/user_authenticationlog.php";
+  hr.open("POST", url, true);
+  hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  hr.onreadystatechange = function() {
+    if (hr.readyState == 4 && hr.status == 200) {
+      var return_data = hr.responseText;
+       if(return_data =="true" || return_data.includes("true")){
+          _("urldelterecord"+link).innerHTML = "";
+         }else{
+           _("urldeltemessage"+link).innerHTML = "<i style='color:#5cb85c;'>Error..</i>";
+        }
+        
+    }
+  }
+  hr.send(vars);
+  _("urldeltemessage"+link).innerHTML = "<i style='color:#5cb85c;'>deleting...</i>";
+  
+}
