@@ -133,10 +133,46 @@ if($saveStaus == "yes"){
 
 }
 
-
+//function to retrive all the url
 function getallURL($connect,$user){
 $all_Urllinks .='';
 $query= mysqli_query($connect,"SELECT * FROM url_links WHERE User_ID='$user' ORDER BY URL_ID DESC");
+    while($revurl = mysqli_fetch_assoc($query)){
+      $getURL_ID = $revurl['URL_ID'];
+      $getUser_ID = $revurl['User_ID'];
+      $getURL = $revurl['URL'];
+      $getStatus = $revurl['Status'];
+      $getDate_Inserted = $revurl['Date_Inserted'];
+ 
+
+$querycheck= mysqli_query($connect,"SELECT * FROM urls_metrics WHERE URL_ID='$getURL_ID' ");
+    while($revnt = mysqli_fetch_assoc($querycheck)){
+      $getCrawl_ID = $revnt['Crawl_ID'];
+      //$getURL = $revnt['URL_ID'];
+      $getHTML_title = $revnt['HTML_title'];
+      $getExternalLinks = $revnt['ExternalLinks'];
+      $getgoogleAnalytics = $revnt['googleAnalytics'];
+  }
+
+ $all_Urllinks .='<tr id="urldelterecord'.$getURL_ID.'">
+ 					 <td><a onClick="deleteURL('.$getURL_ID.')" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a></td>
+                     <td>'.$getURL.'</td>
+                     <td>'.$getDate_Inserted.'</td>
+                     <td id="crawlStatus'.$getURL_ID.'">'.$getStatus.'</td>
+                     <td id="titleStatus'.$getURL_ID.'">'.$getHTML_title.'</td>
+                     <td id="ExternalStatus'.$getURL_ID.'">'.$getExternalLinks.'</td>
+                     <td id="googleStatus'.$getURL_ID.'">'.$getgoogleAnalytics.'</td>
+                     <td><a onClick="CrawlURL(\''.$getURL_ID.'\',\''.$getURL.'\')" class="btn btn-success btn-xs" id="urldeltemessage'.$getURL_ID.'"><i class="fa fa-search"></i> Crawl Url </a></td>
+                </tr>';
+}
+
+ echo $all_Urllinks;
+}
+
+//function to retrive url after crawling
+function geta_crawed_URL($connect,$id){
+$all_Urllinks .='';
+$query= mysqli_query($connect,"SELECT * FROM url_links WHERE URL_ID='$id'");
     while($revurl = mysqli_fetch_assoc($query)){
       $getURL_ID = $revurl['URL_ID'];
       $getUser_ID = $revurl['User_ID'];
@@ -178,22 +214,53 @@ function delete_URL($connect,$url){
 	}
 	
 }
+//Function to delete URL
+function save_urls_metrics($connect,$url,$url_id,$getTitle,$exLink,$ganalytics){
+	if(mysqli_query($connect,"INSERT INTO urls_metrics VALUES ('','$url_id','$getTitle','$exLink','$ganalytics')")){
+			mysqli_query($connect,"UPDATE url_links SET Status='done' WHERE URL_ID='$url_id' ");
+			return true;
+	}else{
+			return false;
+	}
+	
+}
 
 //function to process Crawl URL  and send back feedback to Ajavx  CrawlURL method
-function Crawl_this_URL($url_id,$url){
-
-	$onlinestatus = $this->checkOffline($url);
+function Crawl_this_URL($connect,$url_id,$url){
 
 	//Check offline status
-	if($onlinestatus){
-		$getResult = $this->Crawl_url($url);
-		$onlinestatus = "Online";
-	}else{
-		$onlinestatus = "Offline";
+	$onlinestatus = $this->checkOffline($url);
+
+	switch ($onlinestatus) {
+		case 'Online':
+			$getResult = $this->Crawl_url($url);
+			$getTitle = $getResult['Title'];
+			$exLink = $getResult['external_Links'];
+			$ganalytics = $getResult['Google_analytics'];
+			if(save_urls_metrics($connect,$url,$url_id,$getTitle,$exLink,$ganalytics)){
+				$finalResult = geta_crawed_URL($connect,$url_id);
+				echo $finalResult;
+	 		}else{
+	 			echo "failed";
+	 		}
+			break;
+		case 'Offline':
+			if(save_urls_metrics($connect,$url,$url_id,"n/a","n/a","n/a")){
+				$finalResult = geta_crawed_URL($connect,$url_id);
+				echo $finalResult;
+	 		}else{
+	 			echo "failed";
+	 		}
+			break;
+		
+		default:
+			
+			break;
 	}
-	$getTitle = $getResult['Title'];
-	$exLink = $getResult['external_Links'];
-	$ganalytics = $getResult['Google_analytics'];
+	
+	
+
+	
 
 }
 
