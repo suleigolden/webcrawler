@@ -92,8 +92,8 @@ function login_user(){
     var hr = new XMLHttpRequest();
     var url = "controller/user_authenticationlog.php";
     var eml = _("emailprolog").value;
-    var psw1 = _("passwordprolog").value;
-    var vars = "email_login="+eml+"&passwordone_login="+psw1;
+    var pswd = _("passwordprolog").value;
+    var vars = "email_login="+eml+"&passwordone_login="+pswd;
     hr.open("POST", url, true);
     hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     

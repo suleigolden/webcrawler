@@ -105,7 +105,6 @@ function SaveUrl_new($connect,$links){
 session_start();
 $set_title =  check_injection($connect,htmlentities($title));
 $U_NavID = $_SESSION['userlog@Identication@NaviGaTion']; 
-
 //Save the first Url
 $url = strtok($links,'*^*');
 $saveStaus = $this -> Save_this_Url($connect,$U_NavID,$url);
@@ -153,6 +152,7 @@ $querycheck= mysqli_query($connect,"SELECT * FROM urls_metrics WHERE URL_ID='$ge
       $getHTML_title = $revnt['HTML_title'];
       $getExternalLinks = $revnt['ExternalLinks'];
       $getgoogleAnalytics = $revnt['googleAnalytics'];
+  }
 
  $all_Urllinks .='<tr id="urldelterecord'.$getURL_ID.'">
  					 <td><a onClick="deleteURL('.$getURL_ID.')" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a></td>
@@ -164,7 +164,6 @@ $querycheck= mysqli_query($connect,"SELECT * FROM urls_metrics WHERE URL_ID='$ge
                      <td id="googleStatus'.$getURL_ID.'">'.$getgoogleAnalytics.'</td>
                      <td><a onclick="CrawlURL(\''.$getURL_ID.'\',\''.$getURL.'\')" class="btn btn-success btn-xs"><i class="fa fa-search"></i> Crawl Url </a></td>
                 </tr>';
- }
 }
 
  echo $all_Urllinks;
