@@ -16,6 +16,12 @@ $querycheck= mysqli_query($connect,"SELECT * FROM users WHERE Email_iD='$Email_a
       $U_passWord = $revnt['passWord_Log'];
       $DateReg = $revnt['Date_Registered'];
  }
+ //check if SESSION has expaired
+ if(empty($Email_address) || empty($userpsw) || empty($U_NavID)){
+ 	echo "<script type='text/javascript'>window.location.href = 'http://localhost/suleiman/webcrawler/';</script>"; 
+exit();
+}else{
  $_SESSION['userlog@Identication@NaviGaTion'] = $U_NavID; 
+}
 
 ?>
