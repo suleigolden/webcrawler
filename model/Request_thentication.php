@@ -89,7 +89,7 @@ public function setLogSESSION($Email,$psw){
 public function Save_this_Url($connect,$U_NavID,$url){
 	$query = mysqli_query($connect,"SELECT URL FROM url_links WHERE URL='".$url."' "); 
 	$email_url = mysqli_num_rows($query);
-	if($email_url > 0 ){
+	if($email_url > 0 ){// Check and make sure not to insert the same URL twice
 	 return $url." already exit in the database.";
 	}else{
 	 if(mysqli_query($connect,"INSERT INTO url_links VALUES ('','$U_NavID','$url','new',Now())")){
@@ -216,12 +216,26 @@ function delete_URL($connect,$url){
 }
 //Function to delete URL
 function save_urls_metrics($connect,$url,$url_id,$getTitle,$exLink,$ganalytics){
-	if(mysqli_query($connect,"INSERT INTO urls_metrics VALUES ('','$url_id','$getTitle','$exLink','$ganalytics')")){
+
+	$query = mysqli_query($connect,"SELECT URL_ID FROM urls_metrics WHERE URL_ID='$url_id' "); 
+	$check_url = mysqli_num_rows($query);
+	if($check_url > 0 ){ // Check and make sure not to save URL record twice
+		if(mysqli_query($connect,"UPDATE urls_metrics SET  HTML_title='$getTitle',ExternalLinks='$exLink',googleAnalytics='$ganalytics' WHERE URL_ID='$url_id' ")){
 			mysqli_query($connect,"UPDATE url_links SET Status='done' WHERE URL_ID='$url_id' ");
-			return true;
+					return true;
+			}else{
+					return false;
+			}
 	}else{
-			return false;
+		if(mysqli_query($connect,"INSERT INTO urls_metrics VALUES ('','$url_id','$getTitle','$exLink','$ganalytics')")){
+			mysqli_query($connect,"UPDATE url_links SET Status='done' WHERE URL_ID='$url_id' ");
+					return true;
+			}else{
+					return false;
+			}
 	}
+
+	
 	
 }
 
