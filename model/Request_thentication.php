@@ -136,7 +136,7 @@ if($saveStaus == "yes"){
 
 function getallURL($connect,$user){
 $all_Urllinks .='';
-$query= mysqli_query($connect,"SELECT * FROM url_links WHERE User_ID='$user' ");
+$query= mysqli_query($connect,"SELECT * FROM url_links WHERE User_ID='$user' ORDER BY URL_ID DESC");
     while($revurl = mysqli_fetch_assoc($query)){
       $getURL_ID = $revurl['URL_ID'];
       $getUser_ID = $revurl['User_ID'];
