@@ -1,8 +1,9 @@
 <?php
-
+//adding Users_Request class from model foulder 
 include_once("../model/Request_thentication.php");
-
+//creating an object of Users_Request class
 $Request = new Users_Request();
+//call Users_Request function depending on the request from Ajax function
 if(isset($_POST['checkemail_login'])){
 	$Request ->  checkMail($connect,$_POST['checkemail_login']);
 }else if (isset($_POST['Full_Name']) && isset($_POST['emailreg']) && isset($_POST['passwordreg'])) {

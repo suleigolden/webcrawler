@@ -20,15 +20,16 @@ function checkEmptyval(value){
 		return "false";
 	}
 }
+
 //Create new user account
 function checkEmail(){
-	var hr = new XMLHttpRequest();
-    var url = "controller/user_authenticationlog.php";
+	 var hr = new XMLHttpRequest(); // Create our XMLHttpRequest object
+    var url = "controller/user_authenticationlog.php"; // Create some variables we need to send to our user_authenticationlog PHP file
     var eml = _("emailprolog").value;
     var vars = "checkemail_login="+eml;
     hr.open("POST", url, true);
-    hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    
+    hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");  // Set content type header information for sending url encoded variables in the request
+    // Access the onreadystatechange event for the XMLHttpRequest object
     hr.onreadystatechange = function() {
       if(hr.readyState == 4 && hr.status == 200) {
         var return_data = hr.responseText;
