@@ -87,12 +87,12 @@ public function setLogSESSION($Email,$psw){
 }
 //function to check if URL exist in the database before saving
 public function Save_this_Url($connect,$U_NavID,$url){
-	$query = mysqli_query($connect,"SELECT URL FROM urls_metrics WHERE URL='".$url."' "); 
+	$query = mysqli_query($connect,"SELECT URL FROM url_links WHERE URL='".$url."' "); 
 	$email_url = mysqli_num_rows($query);
 	if($email_url > 0 ){
 	 return $url." already exit in the database.";
 	}else{
-	 if(mysqli_query($connect,"INSERT INTO urls_metrics VALUES ('','$U_NavID','$url','new','','',Now())")){
+	 if(mysqli_query($connect,"INSERT INTO url_links VALUES ('','$U_NavID','$url','new',Now())")){
 			return  "yes";
 		}else{
 			return "no";
@@ -101,13 +101,13 @@ public function Save_this_Url($connect,$U_NavID,$url){
 	}
 }
 //Function to send Save new URL request
-function SaveUrl_new($connect,$url_links){
+function SaveUrl_new($connect,$links){
 session_start();
 $set_title =  check_injection($connect,htmlentities($title));
 $U_NavID = $_SESSION['userlog@Identication@NaviGaTion']; 
 
 //Save the first Url
-$url = strtok($url_links,'*^*');
+$url = strtok($links,'*^*');
 $saveStaus = $this -> Save_this_Url($connect,$U_NavID,$url);
 //Check and Save the rest of url if the user want to save more than one URL 
 while($more_url = strtok('*^*')){
@@ -132,6 +132,42 @@ if($saveStaus == "yes"){
 }
 
 
+}
+
+
+function getallURL($connect,$user){
+$all_Urllinks .='';
+$query= mysqli_query($connect,"SELECT * FROM url_links WHERE User_ID='$user' ");
+    while($revurl = mysqli_fetch_assoc($query)){
+      $getURL_ID = $revurl['URL_ID'];
+      $getUser_ID = $revurl['User_ID'];
+      $getURL = $revurl['URL'];
+      $getStatus = $revurl['Status'];
+      $getDate_Inserted = $revurl['Date_Inserted'];
+ 
+
+$querycheck= mysqli_query($connect,"SELECT * FROM urls_metrics WHERE URL_ID='$getURL_ID' ");
+    while($revnt = mysqli_fetch_assoc($querycheck)){
+      $getCrawl_ID = $revnt['Crawl_ID'];
+      //$getURL = $revnt['URL_ID'];
+      $getHTML_title = $revnt['HTML_title'];
+      $getExternalLinks = $revnt['ExternalLinks'];
+      $getgoogleAnalytics = $revnt['googleAnalytics'];
+
+ $all_Urllinks .='<tr id="urldelterecord'.$getURL_ID.'">
+ 					 <td><a onClick="deleteURL('.$getURL_ID.')" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a></td>
+                     <td>'.$getURL.'</td>
+                     <td>'.$getDate_Inserted.'</td>
+                     <td id="crawlStatus'.$getURL_ID.'">'.$getStatus.'</td>
+                     <td id="titleStatus'.$getURL_ID.'">'.$getHTML_title.'</td>
+                     <td id="ExternalStatus'.$getURL_ID.'">'.$getExternalLinks.'</td>
+                     <td id="googleStatus'.$getURL_ID.'">'.$getgoogleAnalytics.'</td>
+                     <td><a onclick="CrawlURL(\''.$getURL_ID.'\',\''.$getURL.'\')" class="btn btn-success btn-xs"><i class="fa fa-search"></i> Crawl Url </a></td>
+                </tr>';
+ }
+}
+
+ echo $all_Urllinks;
 }
 
 

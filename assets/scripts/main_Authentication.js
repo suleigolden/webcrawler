@@ -152,5 +152,22 @@ for (i = 0; i < links.length; i++) {
       _("saveMessage").innerHTML = "<label style='color:#5cb85c;'>Saving Url.....</label>";
     }
     
+}
 
+function get_llURL_links(user){
+  var vars = "displayAllURldetails="+user;
+  var hr = new XMLHttpRequest();
+  var url = "controller/user_authenticationlog.php";
+  hr.open("POST", url, true);
+  hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  hr.onreadystatechange = function() {
+    if (hr.readyState == 4 && hr.status == 200) {
+      var return_data = hr.responseText;
+        _("all_URL_links").innerHTML =return_data;
+        _("LoadingurltMessage").innerHTML = "";
+    }
+  }
+  hr.send(vars);
+  //_("LoadingurltMessage").innerHTML = "<label style='color:#5cb85c;'>Loading all URL please waite.....</label>";
+  
 }
