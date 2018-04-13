@@ -179,6 +179,90 @@ function delete_URL($connect,$url){
 	
 }
 
+//function to process Crawl URL  and send back feedback to Ajavx  CrawlURL method
+function Crawl_this_URL($url_id,$url){
+
+	$onlinestatus = $this->checkOffline($url);
+
+	//Check offline status
+	if($onlinestatus){
+		$getResult = $this->Crawl_url($url);
+		$onlinestatus = "Online";
+	}else{
+		$onlinestatus = "Offline";
+	}
+	$getTitle = $getResult['Title'];
+	$exLink = $getResult['external_Links'];
+	$ganalytics = $getResult['Google_analytics'];
+
+}
+
+//function to Check if URL is offline
+  function checkOffline($url){
+		// Check the URL is offline 
+		 $curlInit = curl_init($url);
+		   curl_setopt($curlInit,CURLOPT_CONNECTTIMEOUT,10);
+		   curl_setopt($curlInit,CURLOPT_HEADER,true);
+		   curl_setopt($curlInit,CURLOPT_NOBODY,true);
+		   curl_setopt($curlInit,CURLOPT_RETURNTRANSFER,true);
+
+		   //get answer
+		   $response = curl_exec($curlInit);
+
+		   curl_close($curlInit);
+		   if ($response){
+		   		return true;
+		   }else{
+		   		 return false;
+		   }
+	}
+
+//function to Crawl url
+function Crawl_url($url){
+		$result = @file_get_contents($url);
+			
+	  //Creating a regular expresion that will get all the Url in the page
+		preg_match_all('/<a href="(.*?)"/s', $result, $matches);
+			$allLinks = $matches[1];
+
+			$count = 0;
+			foreach ($allLinks as $link) {
+				$count += 1; // Count the number of  external Links
+			}
+		// Gets Webpage Title
+		 if(strlen($result)>0){
+		  $result = trim(preg_replace('/\s+/', ' ', $result)); // supports line breaks inside <title>
+		  preg_match("/\<title\>(.*)\<\/title\>/i",$result,$title); // ignore case
+		  $title=$title[1];
+		 }
+		
+		//check Google analytics
+
+		$g_analytics = $this -> checkGoogleAnalytics($result);
+		return array('Title' => $title,
+              'external_Links' => $count,
+              'Google_analytics' => $g_analytics);
+			
+	}
+
+//function to check Google analytics
+	function checkGoogleAnalytics($url){
+		    //$data = file_get_contents($url);
+			$html_encoded = htmlentities($url);
+
+			$analytics = 'analytics.js';
+			$analytics_g = 'www.google-analytics.com';
+
+			if (strpos($html_encoded,$analytics) !== false || strpos($html_encoded,$analytics_g) !== false) {
+			    return "Yes";
+			}else{
+				return "n/a";
+			}
+	}
+
+
+
+
 
 }
 
