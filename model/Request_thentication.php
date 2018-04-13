@@ -155,14 +155,14 @@ $querycheck= mysqli_query($connect,"SELECT * FROM urls_metrics WHERE URL_ID='$ge
   }
 
  $all_Urllinks .='<tr id="urldelterecord'.$getURL_ID.'">
- 					 <td><a onClick="deleteURL('.$getURL_ID.')" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a></td>
+ 					 <td><a onClick="deleteURL('.$getURL_ID.')" class="btn btn-danger btn-xs" id="urldeltemessage'.$getURL_ID.'"><i class="fa fa-trash-o"></i> Delete </a></td>
                      <td>'.$getURL.'</td>
                      <td>'.$getDate_Inserted.'</td>
                      <td id="crawlStatus'.$getURL_ID.'">'.$getStatus.'</td>
                      <td id="titleStatus'.$getURL_ID.'">'.$getHTML_title.'</td>
                      <td id="ExternalStatus'.$getURL_ID.'">'.$getExternalLinks.'</td>
                      <td id="googleStatus'.$getURL_ID.'">'.$getgoogleAnalytics.'</td>
-                     <td><a onClick="CrawlURL(\''.$getURL_ID.'\',\''.$getURL.'\')" class="btn btn-success btn-xs" id="urldeltemessage'.$getURL_ID.'"><i class="fa fa-search"></i> Crawl Url </a></td>
+                     <td><a onClick="CrawlURL(\''.$getURL_ID.'\',\''.$getURL.'\')" class="btn btn-success btn-xs" id="urlcrawmessage'.$getURL_ID.'"><i class="fa fa-search"></i> Crawl Url </a></td>
                 </tr>';
 }
 
@@ -190,16 +190,16 @@ $querycheck= mysqli_query($connect,"SELECT * FROM urls_metrics WHERE URL_ID='$ge
       $getgoogleAnalytics = $revnt['googleAnalytics'];
   }
 
- $all_Urllinks .='<tr id="urldelterecord'.$getURL_ID.'">
- 					 <td><a onClick="deleteURL('.$getURL_ID.')" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a></td>
+ $all_Urllinks .='
+ 					 <td><a onClick="deleteURL('.$getURL_ID.')" class="btn btn-danger btn-xs" id="urldeltemessage'.$getURL_ID.'"><i class="fa fa-trash-o"></i> Delete </a></td>
                      <td>'.$getURL.'</td>
                      <td>'.$getDate_Inserted.'</td>
                      <td id="crawlStatus'.$getURL_ID.'">'.$getStatus.'</td>
                      <td id="titleStatus'.$getURL_ID.'">'.$getHTML_title.'</td>
                      <td id="ExternalStatus'.$getURL_ID.'">'.$getExternalLinks.'</td>
                      <td id="googleStatus'.$getURL_ID.'">'.$getgoogleAnalytics.'</td>
-                     <td><a onClick="CrawlURL(\''.$getURL_ID.'\',\''.$getURL.'\')" class="btn btn-success btn-xs" id="urldeltemessage'.$getURL_ID.'"><i class="fa fa-search"></i> Crawl Url </a></td>
-                </tr>';
+                     <td><a onClick="CrawlURL(\''.$getURL_ID.'\',\''.$getURL.'\')" class="btn btn-success btn-xs" id="urlcrawmessage'.$getURL_ID.'"><i class="fa fa-search"></i> Crawl Url </a></td>
+                ';
 }
 
  echo $all_Urllinks;
@@ -237,17 +237,18 @@ function Crawl_this_URL($connect,$url_id,$url){
 			$getTitle = $getResult['Title'];
 			$exLink = $getResult['external_Links'];
 			$ganalytics = $getResult['Google_analytics'];
-			if(save_urls_metrics($connect,$url,$url_id,$getTitle,$exLink,$ganalytics)){
-				$finalResult = geta_crawed_URL($connect,$url_id);
+			if($this -> save_urls_metrics($connect,$url,$url_id,$getTitle,$exLink,$ganalytics)){
+				$finalResult = $this -> geta_crawed_URL($connect,$url_id);
 				echo $finalResult;
 	 		}else{
 	 			echo "failed";
 	 		}
 			break;
 		case 'Offline':
-			if(save_urls_metrics($connect,$url,$url_id,"n/a","n/a","n/a")){
-				$finalResult = geta_crawed_URL($connect,$url_id);
-				echo $finalResult;
+			if($this -> save_urls_metrics($connect,$url,$url_id,"n/a","n/a","n/a")){
+				//$finalResult = geta_crawed_URL($connect,$url_id);
+				//echo $finalResult;
+				echo "failed";
 	 		}else{
 	 			echo "failed";
 	 		}

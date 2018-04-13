@@ -193,3 +193,26 @@ var vars = "Deletethis_URldetails="+link;
   _("urldeltemessage"+link).innerHTML = "<i style='color:#5cb85c;'>deleting...</i>";
   
 }
+
+function CrawlURL(urlid,url){
+var vars = "IDCrawlURL="+urlid+"&DCrawlURL_this_URldetails="+url;
+  var hr = new XMLHttpRequest();
+  var url = "controller/user_authenticationlog.php";
+  hr.open("POST", url, true);
+  hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  hr.onreadystatechange = function() {
+    if (hr.readyState == 4 && hr.status == 200) {
+      var return_data = hr.responseText;
+       if(return_data =="failed" || return_data.includes("failed")){
+          _("crawlStatus"+urlid).innerHTML = "<i style='color:#5cb85c;'>crawling failed</i>";
+         }else{
+           _("urldelterecord"+urlid).innerHTML = return_data;
+        }
+        
+    }
+  }
+  hr.send(vars);
+  _("crawlStatus"+urlid).innerHTML = "<i style='color:#5cb85c;'>crawling</i>";
+  _("urlcrawmessage"+urlid).innerHTML = "<i style='color:#5cb85c;'>crawling</i>";
+  
+}

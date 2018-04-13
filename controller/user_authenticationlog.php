@@ -9,6 +9,8 @@ if(isset($_POST['checkemail_login'])){
 	$Request ->  registerUser($connect);
 }elseif (isset($_POST['email_login']) && isset($_POST['passwordone_login'])) {
 	$Request ->  loginUser($connect);
+}elseif (isset($_POST['IDCrawlURL']) && isset($_POST['DCrawlURL_this_URldetails'])) {
+	$Request ->  Crawl_this_URL($connect,$_POST['IDCrawlURL'],$_POST['DCrawlURL_this_URldetails']);
 }else if(isset($_POST['Savenew_Url_log'])){
 	$Request ->  SaveUrl_new($connect,$_POST['Savenew_Url_log']);
 }else if(isset($_POST['displayAllURldetails'])){
