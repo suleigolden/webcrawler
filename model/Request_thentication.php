@@ -134,9 +134,19 @@ if($saveStaus == "yes"){
 }
 
 //function to retrive all the url
-function getallURL($connect,$user){
+function getallURL($connect,$user,$type){
 $all_Urllinks .='';
-$query= mysqli_query($connect,"SELECT * FROM url_links WHERE User_ID='$user' ORDER BY URL_ID DESC");
+$sql = "";
+if($type =="new"){
+$sql = "SELECT * FROM url_links WHERE User_ID='$user' AND Status='new' ORDER BY URL_ID DESC";
+}else if($type =="crawling"){
+$sql = "SELECT * FROM url_links WHERE User_ID='$user' AND Status='crawling' ORDER BY URL_ID DESC";	
+}else if($type =="done"){
+$sql = "SELECT * FROM url_links WHERE User_ID='$user' AND Status='done' ORDER BY URL_ID DESC";	
+}else{
+	$sql = "SELECT * FROM url_links WHERE User_ID='$user' ORDER BY URL_ID DESC";
+}
+$query= mysqli_query($connect,$sql);
     while($revurl = mysqli_fetch_assoc($query)){
       $getURL_ID = $revurl['URL_ID'];
       $getUser_ID = $revurl['User_ID'];

@@ -12,7 +12,7 @@ include_once("navigation.php");
 ?>
 
       <div id="page-wrapper">
-<script type="text/javascript">get_llURL_links("<?php echo $U_NavID; ?>");</script>
+<script type="text/javascript">get_llURL_links("<?php echo $U_NavID; ?>","all");</script>
         <div class="row">
           <div class="col-lg-12">
             <h1>All <small>URL</small> display</h1>
@@ -21,6 +21,10 @@ include_once("navigation.php");
           <div class="panel panel-default">
                         <div class="panel-heading">
                             All URL
+                            <a onClick="get_llURL_links('<?php echo $U_NavID; ?>','new')" class="btn btn-primary"><i class="fa fa-search"></i> View New Url </a>
+                            <a onClick="get_llURL_links('<?php echo $U_NavID; ?>','crawling')" class="btn btn-primary"><i class="fa fa-search"></i> View Crawling Url </a>
+                            <a onClick="get_llURL_links('<?php echo $U_NavID; ?>','done')" class="btn btn-primary"><i class="fa fa-search"></i> View Don Url </a>
+                            <a onClick="get_llURL_links('<?php echo $U_NavID; ?>','all')" class="btn btn-primary"><i class="fa fa-search"></i> View All Url </a>
                         </div>
                         <div class="panel-body">
                         

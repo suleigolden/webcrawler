@@ -13,8 +13,8 @@ if(isset($_POST['checkemail_login'])){
 	$Request ->  Crawl_this_URL($connect,$_POST['IDCrawlURL'],$_POST['DCrawlURL_this_URldetails']);
 }else if(isset($_POST['Savenew_Url_log'])){
 	$Request ->  SaveUrl_new($connect,$_POST['Savenew_Url_log']);
-}else if(isset($_POST['displayAllURldetails'])){
-	$Request ->  getallURL($connect,$_POST['displayAllURldetails']);
+}else if(isset($_POST['displayAllURldetails']) && isset($_POST['view_type'])){
+	$Request ->  getallURL($connect,$_POST['displayAllURldetails'],$_POST['view_type']);
 }else if(isset($_POST['Deletethis_URldetails'])){
 	$Request ->  delete_URL($connect,$_POST['Deletethis_URldetails']);
 }

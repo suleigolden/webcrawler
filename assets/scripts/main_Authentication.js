@@ -154,8 +154,8 @@ for (i = 0; i < links.length; i++) {
     
 }
 
-function get_llURL_links(user){
-  var vars = "displayAllURldetails="+user;
+function get_llURL_links(user,type){
+  var vars = "displayAllURldetails="+user+"&view_type="+type;
   var hr = new XMLHttpRequest();
   var url = "controller/user_authenticationlog.php";
   hr.open("POST", url, true);
